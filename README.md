@@ -44,3 +44,28 @@ Documentação
 ##  Status
 
 🟡 **Em desenvolvimento — planejamento da arquitetura inicial.**
+
+## 🏢 Cenário do laboratório
+
+O ambiente simulará um pequeno Data Center responsável por hospedar uma aplicação web corporativa.
+
+O serviço será acessado por usuários externos ao ambiente de servidores.
+
+Inicialmente, o Data Center será responsável por disponibilizar:
+
+* serviço web;
+* resolução de nomes através de DNS;
+* infraestrutura de rede necessária para acesso ao serviço.
+
+O laboratório será desenvolvido a partir da perspectiva de um **Data Center Technician**, responsável por manter a disponibilidade do ambiente e diagnosticar falhas de conectividade e serviço.
+
+```text
+Usuário
+   ↓
+Rede
+   ↓
+Data Center
+   ├── DNS
+   └── Web Server
+```
+
