@@ -348,7 +348,7 @@ As evidências registram apenas **marcos importantes do laboratório**, evitando
 
 Primeira versão da infraestrutura física criada no Cisco Packet Tracer.
 
-[🔎 Visualizar evidência 1.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/1.0-%20Topologia%20montada.png)
+[ Visualizar evidência 1.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/1.0-%20Topologia%20montada.png)
 
 ---
 
@@ -356,13 +356,15 @@ Primeira versão da infraestrutura física criada no Cisco Packet Tracer.
 
 Configuração e validação das interfaces do `R-EDGE-01` conectadas às redes de usuários e do Data Center.
 
-[🔎 Visualizar evidência 1.1](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/1.1%20-%20IPs%20do%20Roteador%20Configurados.png)
+[ Visualizar evidência 1.1](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/1.1%20-%20IPs%20do%20Roteador%20Configurados.png)
 
 ---
 
 ## 2.0 — USER-01 configurado e gateway validado
 
 Configuração do usuário na rede:
+
+[Visualizar evidência 2.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/2.0%20-%20USER-01%20Configurado%20e%20Gateway%20Validado.png)
 
 ```text
 192.168.10.0/24
@@ -374,9 +376,12 @@ e validação de comunicação com:
 192.168.10.1
 ```
 
+
 ---
 
 ## 2.1 — Comunicação entre redes validada
+
+
 
 Validação da comunicação entre:
 
@@ -392,11 +397,17 @@ e:
 
 através do `R-EDGE-01`.
 
+[Visualizar evidência 2.1](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/2.1%20-%20Comunicação%20entre%20Redes%20Validada.png)
+
 ---
 
 ## 2.2 — WEB-01 configurado e conectividade validada
 
 Configuração do servidor Web e validação de comunicação com outros componentes da infraestrutura.
+
+[Visualizar evidência 2.2](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/2.2%20-%20WEB-01%20Configurado%20e%20Conectividade%20Validada.png)
+
+
 
 ---
 
@@ -407,6 +418,8 @@ Primeiro acesso realizado ao servidor Web utilizando:
 ```text
 http://192.168.20.20
 ```
+[Visualizar evidência 3.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/3.0%20-%20Serviço%20HTTP%20Validado.png)
+
 
 ---
 
@@ -417,12 +430,17 @@ Configuração do DNS permitindo acesso ao serviço utilizando:
 ```text
 http://perfumaria.radiante
 ```
+[Visualizar evidência 3.1](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/3.1%20-%20DNS%20e%20Acesso%20por%20Nome%20Validados.png)
+
 
 ---
 
 ## 4.0 — Baseline operacional validado
 
 Validação completa do ambiente em estado saudável antes da criação dos primeiros cenários de incidente.
+
+
+[Visualizar evidência 4.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/4.0%20-%20Baseline%20Operacional%20Validado.png)
 
 ---
 
