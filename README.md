@@ -27,7 +27,7 @@ O objetivo não é apenas construir uma topologia funcional, mas compreender **c
 
 ---
 
-# 🏢 Cenário do laboratório
+#  Cenário do laboratório
 
 O ambiente simula um pequeno Data Center responsável por disponibilizar uma aplicação Web corporativa.
 
