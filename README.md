@@ -397,7 +397,7 @@ e:
 
 através do `R-EDGE-01`.
 
-[Visualizar evidência 2.1](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/2.1%20-%20Comunicação%20entre%20Redes%20Validada.png)
+[Visualizar evidência 2.1](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/2.1%20-%20Comunicac%CC%A7a%CC%83o%20entre%20Redes%20Validada.png)
 
 ---
 
@@ -418,8 +418,7 @@ Primeiro acesso realizado ao servidor Web utilizando:
 ```text
 http://192.168.20.20
 ```
-[Visualizar evidência 3.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/3.0%20-%20Serviço%20HTTP%20Validado.png)
-
+[Visualizar evidência 3.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/3.0%20-%20Servic%CC%A7o%20HTTP%20Validado.png)
 
 ---
 
@@ -438,7 +437,6 @@ http://perfumaria.radiante
 ## 4.0 — Baseline operacional validado
 
 Validação completa do ambiente em estado saudável antes da criação dos primeiros cenários de incidente.
-
 
 [Visualizar evidência 4.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/4.0%20-%20Baseline%20Operacional%20Validado.png)
 
