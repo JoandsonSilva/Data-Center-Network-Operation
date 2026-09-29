@@ -1,33 +1,36 @@
-#  Data Center Network Operations Lab
+# 🌐 Data Center Network Operations Lab
 
 Laboratório prático de redes desenvolvido no **Cisco Packet Tracer** para simular a infraestrutura e a rotina operacional básica de um pequeno Data Center.
 
-O projeto é construído progressivamente a partir da perspectiva de um **Data Center Technician**, com foco em disponibilidade, conectividade, troubleshooting, validação e documentação técnica.
+O projeto é construído progressivamente a partir da perspectiva de um **Data Center Technician**, com foco em disponibilidade, conectividade, troubleshooting, incident management, validação e documentação técnica.
 
 ---
 
-##  Objetivo
+# 🎯 Objetivo
 
 Construir e operar uma infraestrutura simulada de Data Center aplicando conceitos de:
 
-* networking;
-* endereçamento IP;
-* switches e roteadores;
-* servidores;
-* segmentação de redes;
-* DNS;
-* HTTP;
-* roteamento;
-* conectividade;
-* troubleshooting;
-* incidentes;
-* documentação operacional.
+- networking;
+- endereçamento IPv4;
+- switches e roteadores;
+- servidores;
+- segmentação de redes;
+- DNS;
+- HTTP;
+- roteamento;
+- conectividade;
+- troubleshooting;
+- gerenciamento de incidentes;
+- análise de causa raiz;
+- documentação operacional.
 
-O objetivo não é apenas construir uma topologia funcional, mas compreender **como os componentes se comunicam, como as falhas podem ocorrer e como diagnosticar problemas de forma estruturada**.
+O objetivo não é apenas construir uma topologia funcional, mas compreender:
+
+> **como os componentes se comunicam, como uma falha impacta o serviço e como localizar o problema de forma estruturada antes de executar qualquer ação corretiva.**
 
 ---
 
-#  Cenário do laboratório
+# 🏢 Cenário do laboratório
 
 O ambiente simula um pequeno Data Center responsável por disponibilizar uma aplicação Web corporativa.
 
@@ -35,120 +38,115 @@ O serviço principal utilizado no laboratório é:
 
 ```text
 perfumaria.radiante
-```
 
-O ambiente possui dois perfis principais:
+O laboratório possui dois perfis principais.
 
-### Usuário corporativo
+Usuário corporativo
 
 Responsável por acessar a aplicação hospedada no Data Center.
 
-### Data Center Technician
+Para o usuário, a infraestrutura interna é transparente.
+
+O serviço deve simplesmente estar disponível através de:
+
+http://perfumaria.radiante
+Data Center Technician
 
 Responsável por:
 
-* acompanhar a infraestrutura;
-* validar conectividade;
-* diagnosticar falhas;
-* avaliar impacto;
-* realizar troubleshooting;
-* corrigir problemas dentro de sua responsabilidade;
-* validar a recuperação;
-* documentar incidentes.
-
----
-
-#  Topologia
+acompanhar a infraestrutura;
+validar conectividade;
+diagnosticar falhas;
+avaliar impacto;
+realizar troubleshooting;
+identificar a camada afetada;
+executar ações dentro de sua responsabilidade;
+escalar quando necessário;
+validar a recuperação;
+documentar incidentes.
+🖥️ Topologia
 
 A primeira versão da infraestrutura utiliza:
 
-* 1 PC de usuário;
-* 2 switches Cisco 2960;
-* 1 roteador Cisco ISR 4331;
-* 1 servidor DNS;
-* 1 servidor Web.
+1 PC de usuário;
+2 switches Cisco 2960;
+1 roteador Cisco ISR 4331;
+1 servidor DNS;
+1 servidor Web.
 
 Estrutura:
 
-```text
-USER-01
-192.168.10.10
-      │
-      ▼
-SW-USER-01
-      │
-      ▼
-R-EDGE-01
-      │
-      ▼
-SW-DC-01
-   ┌──┴───────────────┐
-   ▼                  ▼
-DNS-01              WEB-01
-192.168.20.10       192.168.20.20
-```
+             USER NETWORK
+            192.168.10.0/24
+
+               USER-01
+            192.168.10.10
+                  │
+                  ▼
+             SW-USER-01
+                  │
+                  ▼
+              R-EDGE-01
+        192.168.10.1 / 192.168.20.1
+                  │
+                  ▼
+              SW-DC-01
+             ┌────┴─────┐
+             ▼          ▼
+          DNS-01      WEB-01
+      192.168.20.10  192.168.20.20
+
+           DATA CENTER NETWORK
+             192.168.20.0/24
 
 O roteador conecta duas redes distintas:
 
-```text
 USER NETWORK
 192.168.10.0/24
 
-DATA CENTER NETWORK
-192.168.20.0/24
-```
-
----
-
-#  Plano de endereçamento
-
-| Dispositivo | Interface | Endereço IP     | Máscara | Função                      |
-| ----------- | --------- | --------------- | ------- | --------------------------- |
-| R-EDGE-01   | Gi0/0/0   | `192.168.10.1`  | `/24`   | Gateway da rede de usuários |
-| USER-01     | Fa0       | `192.168.10.10` | `/24`   | Usuário corporativo         |
-| R-EDGE-01   | Gi0/0/1   | `192.168.20.1`  | `/24`   | Gateway do Data Center      |
-| DNS-01      | Fa0       | `192.168.20.10` | `/24`   | Servidor DNS                |
-| WEB-01      | Fa0       | `192.168.20.20` | `/24`   | Servidor Web                |
-
----
-
-#  Roteamento
-
-O `R-EDGE-01` possui uma interface em cada uma das redes:
-
-```text
-Gi0/0/0
-192.168.10.1
-```
-
 e:
 
-```text
+DATA CENTER NETWORK
+192.168.20.0/24
+🔌 Conexões físicas
+Origem	Porta	Destino	Porta	Cabo
+USER-01	FastEthernet0	SW-USER-01	FastEthernet0/1	Copper Straight-Through
+SW-USER-01	GigabitEthernet0/1	R-EDGE-01	GigabitEthernet0/0/0	Copper Straight-Through
+R-EDGE-01	GigabitEthernet0/0/1	SW-DC-01	GigabitEthernet0/1	Copper Straight-Through
+DNS-01	FastEthernet0	SW-DC-01	FastEthernet0/1	Copper Straight-Through
+WEB-01	FastEthernet0	SW-DC-01	FastEthernet0/2	Copper Straight-Through
+🌐 Plano de endereçamento
+Dispositivo	Interface	Endereço IP	Máscara	Função
+R-EDGE-01	Gi0/0/0	192.168.10.1	/24	Gateway da rede de usuários
+USER-01	Fa0	192.168.10.10	/24	Usuário corporativo
+R-EDGE-01	Gi0/0/1	192.168.20.1	/24	Gateway do Data Center
+DNS-01	Fa0	192.168.20.10	/24	Servidor DNS
+WEB-01	Fa0	192.168.20.20	/24	Servidor Web
+🔀 Roteamento
+
+O R-EDGE-01 possui uma interface em cada rede.
+
+Interface da rede de usuários
+Gi0/0/0
+192.168.10.1
+Interface da rede do Data Center
 Gi0/0/1
 192.168.20.1
-```
 
 Como as duas redes estão diretamente conectadas ao roteador, ele realiza a comunicação entre:
 
-```text
 192.168.10.0/24
-```
 
 e:
 
-```text
 192.168.20.0/24
-```
 
 sem necessidade, neste estágio do laboratório, de rotas estáticas adicionais.
 
----
+🌍 Serviço Web
 
-#  Serviço Web
+O WEB-01 utiliza:
 
-O `WEB-01` utiliza:
-
-```text
 IP:
 192.168.20.20
 
@@ -157,17 +155,13 @@ Gateway:
 
 DNS:
 192.168.20.10
-```
 
 O serviço HTTP foi ativado e inicialmente validado diretamente através do endereço:
 
-```text
 http://192.168.20.20
-```
 
-Isso permitiu validar:
+Fluxo:
 
-```text
 USER-01
    ↓
 Rede de usuários
@@ -179,33 +173,25 @@ Rede do Data Center
 WEB-01
    ↓
 HTTP
-```
 
----
+Esse teste permitiu validar que o serviço Web podia ser acessado através das duas redes.
 
-#  DNS
+🔎 DNS
 
-O servidor `DNS-01` utiliza:
+O servidor DNS-01 utiliza:
 
-```text
 192.168.20.10
-```
 
 Foi criado um registro DNS associando:
 
-```text
 perfumaria.radiante
-```
 
 ao endereço:
 
-```text
 192.168.20.20
-```
 
 Representação:
 
-```text
 perfumaria.radiante
         ↓
       DNS-01
@@ -213,35 +199,29 @@ perfumaria.radiante
 192.168.20.20
         ↓
       WEB-01
-```
 
 Após a configuração, o usuário passou a acessar o serviço através de:
 
-```text
 http://perfumaria.radiante
-```
 
 em vez de utilizar diretamente o endereço IP do servidor.
 
----
+✅ Baseline operacional
 
-#  Baseline operacional
-
-Após a configuração inicial da infraestrutura, foi realizado um conjunto de testes para estabelecer o **estado saudável conhecido do ambiente**.
+Após a configuração inicial da infraestrutura, foi realizado um conjunto de testes para estabelecer o estado saudável conhecido do ambiente.
 
 Foram validados:
 
-* conectividade do usuário com seu gateway;
-* comunicação com o servidor DNS;
-* comunicação com o servidor Web;
-* roteamento entre as duas redes;
-* resolução DNS;
-* serviço HTTP;
-* acesso ao portal através do nome configurado.
+conectividade do usuário com seu gateway;
+comunicação com o servidor DNS;
+comunicação com o servidor Web;
+roteamento entre as duas redes;
+resolução DNS;
+serviço HTTP;
+acesso ao portal através do nome configurado.
 
-Estado atual:
+Estado saudável:
 
-```text
 Gateway                ✅
 Switching               ✅
 Roteamento              ✅
@@ -250,27 +230,21 @@ WEB Server              ✅
 HTTP                    ✅
 Resolução por nome      ✅
 Portal                  ✅
-```
 
 O endereço:
 
-```text
 http://perfumaria.radiante
-```
 
-está acessível a partir do `USER-01`.
+está acessível a partir do USER-01.
 
-Este estado passa a ser considerado o **baseline operacional** do laboratório.
+Este estado passa a ser considerado o baseline operacional do laboratório.
 
-Os próximos cenários de troubleshooting serão comparados com esse estado conhecido de funcionamento.
+Os cenários de troubleshooting são comparados com esse estado conhecido de funcionamento normal.
 
----
+🔄 Metodologia de troubleshooting
 
-#  Metodologia de troubleshooting
+Os incidentes seguem o fluxo:
 
-Os futuros incidentes seguirão o fluxo:
-
-```text
 ALERTA / INCIDENTE
         ↓
 IDENTIFICAR IMPACTO
@@ -288,224 +262,515 @@ VALIDAR AMBIENTE
 MONITORAR
         ↓
 DOCUMENTAR
-```
 
 O objetivo é evitar correções aleatórias.
 
-Antes de qualquer intervenção será necessário entender:
+Antes de qualquer intervenção é necessário entender:
 
-* qual serviço foi impactado;
-* onde a falha pode estar;
-* quais dispositivos estão envolvidos;
-* se outros serviços poderão ser afetados;
-* qual ação deve ser executada;
-* se existe necessidade de escalonamento;
-* como validar que o ambiente voltou ao estado normal.
+qual serviço foi impactado;
+onde a falha pode estar;
+quais dispositivos estão envolvidos;
+se outros serviços podem ser afetados;
+qual ação deve ser executada;
+se existe necessidade de escalonamento;
+como validar que o ambiente retornou ao estado normal.
+🎫 Incident Management
 
----
+O laboratório utiliza uma central única de operações no Jira Service Management para registrar, investigar e documentar incidentes técnicos.
 
-#  Incident Management
+A central criada para os projetos foi denominada:
 
-Os próximos cenários de falha serão registrados em uma central de operações utilizando **Jira**.
-
-A proposta é utilizar uma única central para incidentes provenientes de diferentes laboratórios e projetos técnicos.
-
-Exemplo futuro:
-
-```text
 Technical Operations Center
-OPS
-```
 
-Os incidentes do laboratório poderão seguir um padrão como:
+A proposta é utilizar essa central não apenas para este laboratório, mas também para futuros projetos envolvendo:
 
-```text
-[DC-NET] Portal corporativo indisponível
-```
+Data Center;
+Linux;
+Cloud;
+aplicações Web;
+infraestrutura;
+automação;
+outros laboratórios técnicos.
+Fluxo operacional
+INCIDENT RECEIVED
+        ↓
+TRIAGE
+        ↓
+INVESTIGATION
+        ↓
+ROOT CAUSE
+        ↓
+CORRECTIVE ACTION
+        ↓
+VALIDATION
+        ↓
+RESOLUTION
 
-O ticket deverá registrar:
+Cada incidente deverá registrar:
 
-* impacto;
-* ambiente afetado;
-* sintomas;
-* evidências;
-* investigação;
-* diagnóstico;
-* causa;
-* ação executada;
-* validação;
-* resolução.
+Environment;
+Service;
+Impact;
+Symptoms;
+Expected Behavior;
+Initial Checks;
+Investigation;
+Root Cause;
+Action Taken;
+Validation;
+Escalation;
+Resolution.
 
-A central será configurada antes da execução do primeiro incidente.
+O objetivo é manter um histórico técnico reproduzível dos problemas encontrados durante os laboratórios.
 
----
+🚨 INC-001 — Portal perfumaria.radiante indisponível
 
-#  Evidências
+O primeiro incidente controlado simulou a indisponibilidade da aplicação Web hospedada no WEB-01.
 
-As evidências registram apenas **marcos importantes do laboratório**, evitando documentação excessiva de cada pequena configuração.
+Sintoma inicial
 
-## 1.0 — Topologia montada
+O usuário corporativo tentou acessar:
+
+http://perfumaria.radiante
+
+e o portal ficou indisponível.
+
+O incidente foi registrado na central Technical Operations Center e iniciou-se um processo estruturado de troubleshooting.
+
+🔍 Investigação
+Check 1 — Default Gateway
+
+Foi executado:
+
+ping 192.168.10.1
+
+Resultado:
+
+Packets: Sent = 4
+Received = 4
+Lost = 0
+0% packet loss
+Conclusão
+
+A comunicação entre USER-01 e seu gateway estava operacional.
+
+O primeiro trecho da infraestrutura estava funcionando:
+
+USER-01
+   ↓
+SW-USER-01
+   ↓
+R-EDGE-01
+Check 2 — Web Server Connectivity
+
+Foi executado:
+
+ping 192.168.20.20
+
+Resultado:
+
+Packets: Sent = 4
+Received = 4
+Lost = 0
+0% packet loss
+Conclusão
+
+O WEB-01 estava acessível através da infraestrutura de rede.
+
+Isso indicou que estavam operacionais:
+
+switching;
+roteamento;
+conectividade IP;
+comunicação entre as redes;
+host WEB-01.
+Check 3 — DNS Resolution
+
+Foi executado:
+
+ping perfumaria.radiante
+
+O nome foi corretamente resolvido para:
+
+192.168.20.20
+
+Um primeiro teste apresentou perda de 1 dos 4 pacotes.
+
+Uma segunda validação apresentou:
+
+4 packets sent
+4 received
+0% packet loss
+Conclusão
+
+A resolução DNS estava funcionando normalmente e o domínio estava apontando para o endereço correto do WEB-01.
+
+Check 4 — Direct HTTP Access
+
+Foi realizado acesso direto ao servidor através de:
+
+http://192.168.20.20
+
+Resultado:
+
+Server reset connection
+Conclusão
+
+O servidor estava acessível através da rede, porém o serviço HTTP não estava respondendo corretamente.
+
+Nesse momento, a investigação deixou de focar conectividade e foi direcionada para a camada de serviço.
+
+Check 5 — HTTP Service Status
+
+Foi verificado:
+
+WEB-01
+→ Services
+→ HTTP
+
+Resultado:
+
+HTTP Service: Off
+
+A falha foi isolada no serviço HTTP do WEB-01.
+
+🎯 Root Cause
+
+A causa raiz identificada foi:
+
+O serviço HTTP do WEB-01 estava desativado.
+
+Embora o servidor permanecesse acessível através da rede e respondesse normalmente aos testes ICMP, ele não conseguia disponibilizar a aplicação Web porque o serviço responsável pelas requisições HTTP não estava ativo.
+
+O incidente demonstrou uma diferença importante:
+
+HOST DISPONÍVEL
+≠
+SERVIÇO DISPONÍVEL
+
+Um equipamento pode responder normalmente na rede enquanto uma aplicação ou serviço específico permanece indisponível.
+
+🔧 Corrective Action
+
+O serviço:
+
+HTTP: Off
+
+foi alterado para:
+
+HTTP: On
+
+Nenhuma outra configuração da infraestrutura foi modificada.
+
+✅ Validation
+
+Após a correção foram realizados dois testes.
+
+Acesso direto pelo IP
+http://192.168.20.20
+
+Resultado:
+
+✅ Funcionando
+Acesso através do DNS
+http://perfumaria.radiante
+
+Resultado:
+
+✅ Funcionando
+
+O serviço retornou ao estado definido no baseline operacional.
+
+📌 Resultado do INC-001
+Gateway              ✅
+Switching             ✅
+Roteamento            ✅
+DNS                   ✅
+WEB-01                ✅
+HTTP                  ❌ → ✅
+Portal                ✅ Restaurado
+
+Status final:
+
+RESOLVED
+
+Fluxo do incidente:
+
+Portal indisponível
+        ↓
+Gateway validado
+        ↓
+Servidor alcançável
+        ↓
+Roteamento validado
+        ↓
+DNS validado
+        ↓
+HTTP por IP falhou
+        ↓
+Serviço HTTP inspecionado
+        ↓
+HTTP encontrado Off
+        ↓
+HTTP reativado
+        ↓
+Acesso por IP validado
+        ↓
+Acesso por nome validado
+        ↓
+Incidente resolvido
+🧠 Aprendizados do INC-001
+Ping não comprova disponibilidade da aplicação
+
+O WEB-01 respondia normalmente aos testes de conectividade mesmo quando o HTTP estava indisponível.
+
+Portanto:
+
+Servidor acessível
+≠
+Aplicação disponível
+Troubleshooting deve eliminar possibilidades
+
+A investigação validou progressivamente:
+
+gateway;
+conectividade;
+roteamento;
+servidor;
+DNS;
+serviço HTTP.
+
+A cada teste, o espaço de investigação foi reduzido.
+
+Sintoma não é causa
+
+Sintoma:
+
+Portal indisponível
+
+Causa:
+
+HTTP Service Off
+Correção precisa ser validada
+
+Reativar o HTTP não foi suficiente para considerar o incidente encerrado.
+
+Foi necessário validar:
+
+acesso direto pelo IP;
+acesso através do domínio;
+retorno ao baseline operacional.
+Documentação faz parte da operação
+
+O incidente foi registrado no Jira contendo:
+
+impacto;
+sintomas;
+investigação;
+causa raiz;
+ação corretiva;
+validação;
+resolução.
+📸 Evidências
+
+As evidências registram apenas marcos importantes do laboratório, evitando documentação excessiva de cada pequena configuração.
+
+1.0 — Topologia montada
 
 Primeira versão da infraestrutura física criada no Cisco Packet Tracer.
 
-[ Visualizar evidência 1.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/1.0-%20Topologia%20montada.png)
+Visualizar evidência 1.0
 
----
+1.1 — IPs do roteador configurados
 
-## 1.1 — IPs do roteador configurados
+Configuração e validação das interfaces do R-EDGE-01 conectadas às redes de usuários e do Data Center.
 
-Configuração e validação das interfaces do `R-EDGE-01` conectadas às redes de usuários e do Data Center.
+Visualizar evidência 1.1
 
-[ Visualizar evidência 1.1](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/1.1%20-%20IPs%20do%20Roteador%20Configurados.png)
-
----
-
-## 2.0 — USER-01 configurado e gateway validado
+2.0 — USER-01 configurado e gateway validado
 
 Configuração do usuário na rede:
 
-[Visualizar evidência 2.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/2.0%20-%20USER-01%20Configurado%20e%20Gateway%20Validado.png)
-
-```text
 192.168.10.0/24
-```
 
 e validação de comunicação com:
 
-```text
 192.168.10.1
-```
 
+Visualizar evidência 2.0
 
----
-
-## 2.1 — Comunicação entre redes validada
-
-
+2.1 — Comunicação entre redes validada
 
 Validação da comunicação entre:
 
-```text
 192.168.10.0/24
-```
 
 e:
 
-```text
 192.168.20.0/24
-```
 
-através do `R-EDGE-01`.
+através do R-EDGE-01.
 
-[Visualizar evidência 2.1](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/2.1%20-%20Comunicac%CC%A7a%CC%83o%20entre%20Redes%20Validada.png)
+Visualizar evidência 2.1
 
----
+2.2 — WEB-01 configurado e conectividade validada
 
-## 2.2 — WEB-01 configurado e conectividade validada
+Configuração do servidor Web e validação de comunicação com os demais componentes da infraestrutura.
 
-Configuração do servidor Web e validação de comunicação com outros componentes da infraestrutura.
+Visualizar evidência 2.2
 
-[Visualizar evidência 2.2](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/2.2%20-%20WEB-01%20Configurado%20e%20Conectividade%20Validada.png)
-
-
-
----
-
-## 3.0 — Serviço HTTP validado
+3.0 — Serviço HTTP validado
 
 Primeiro acesso realizado ao servidor Web utilizando:
 
-```text
 http://192.168.20.20
-```
-[Visualizar evidência 3.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/3.0%20-%20Servic%CC%A7o%20HTTP%20Validado.png)
 
----
+Visualizar evidência 3.0
 
-## 3.1 — DNS e acesso por nome validados
+3.1 — DNS e acesso por nome validados
 
 Configuração do DNS permitindo acesso ao serviço utilizando:
 
-```text
 http://perfumaria.radiante
-```
-[Visualizar evidência 3.1](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/3.1%20-%20DNS%20e%20Acesso%20por%20Nome%20Validados.png)
 
+Visualizar evidência 3.1
 
----
-
-## 4.0 — Baseline operacional validado
+4.0 — Baseline operacional validado
 
 Validação completa do ambiente em estado saudável antes da criação dos primeiros cenários de incidente.
 
-[Visualizar evidência 4.0](https://github.com/JoandsonSilva/Data-Center-Network-Operation/blob/main/evidence/4.0%20-%20Baseline%20Operacional%20Validado.png)
+Visualizar evidência 4.0
 
----
+5.0 — Central de Operações no Jira criada
 
-#  Conceitos aplicados
+Criação da central Technical Operations Center utilizando Jira Service Management para registrar e acompanhar incidentes provenientes dos laboratórios técnicos.
 
-Durante o desenvolvimento inicial foram aplicados conceitos de:
+Visualizar evidência 5.0
 
-* LAN;
-* IPv4;
-* subnet mask;
-* default gateway;
-* switching;
-* roteamento;
-* interfaces de rede;
-* DNS;
-* HTTP;
-* resolução de nomes;
-* servidor Web;
-* testes com `ping`;
-* `ipconfig`;
-* `ipconfig /all`;
-* Cisco IOS;
-* `show ip interface brief`;
-* validação de conectividade;
-* baseline operacional;
-* troubleshooting estruturado.
+5.2 — INC-001 Portal indisponível
 
----
+Registro do primeiro incidente controlado, no qual o usuário não consegue acessar o serviço perfumaria.radiante.
 
-#  Próximas etapas
+Visualizar evidência 5.2
 
-* [x] Construção da topologia inicial
-* [x] Ativação das interfaces do roteador
-* [x] Configuração das redes IP
-* [x] Configuração do USER-01
-* [x] Configuração do DNS-01
-* [x] Configuração do WEB-01
-* [x] Validação do roteamento
-* [x] Ativação do serviço HTTP
-* [x] Configuração do DNS
-* [x] Acesso através de `perfumaria.radiante`
-* [x] Estabelecimento do baseline operacional
-* [ ] Configuração da Central de Operações no Jira
-* [ ] Criação do primeiro incidente
-* [ ] Troubleshooting do primeiro incidente
-* [ ] Registro da causa e resolução
-* [ ] Novos cenários de falha
+5.3 — INC-001 HTTP Service Off identificado
 
----
+Durante o troubleshooting, a falha foi isolada no serviço HTTP do WEB-01, encontrado em estado Off.
 
-#  Status
+Visualizar evidência 5.3
 
- **Infraestrutura inicial operacional**
+5.4 — INC-001 Serviço restaurado
+
+Após a reativação do serviço HTTP, o acesso ao portal foi novamente validado através de perfumaria.radiante.
+
+Visualizar evidência 5.4
+
+🧠 Conceitos aplicados
+
+Durante o desenvolvimento foram aplicados conceitos de:
+
+LAN;
+IPv4;
+subnet mask;
+default gateway;
+switching;
+roteamento;
+interfaces de rede;
+DNS;
+HTTP;
+resolução de nomes;
+servidor Web;
+testes com ping;
+ipconfig;
+ipconfig /all;
+Cisco IOS;
+show ip interface brief;
+validação de conectividade;
+baseline operacional;
+troubleshooting estruturado;
+Jira Service Management;
+Incident Management;
+triagem de incidentes;
+análise de impacto;
+isolamento de falhas;
+troubleshooting por camadas;
+análise de causa raiz;
+ação corretiva;
+validação pós-correção;
+documentação de incidentes.
+🗺 Próximas etapas
+ Construção da topologia inicial
+ Ativação das interfaces do roteador
+ Configuração das redes IP
+ Configuração do USER-01
+ Configuração do DNS-01
+ Configuração do WEB-01
+ Validação do roteamento
+ Ativação do serviço HTTP
+ Configuração do DNS
+ Acesso através de perfumaria.radiante
+ Estabelecimento do baseline operacional
+ Configuração da Central de Operações no Jira
+ Definição do padrão de Incident Management
+ Criação do primeiro incidente
+ Troubleshooting do INC-001
+ Identificação da causa raiz
+ Correção e validação do serviço
+ Registro e encerramento do INC-001
+ Executar INC-002
+ Simular falha relacionada ao DNS
+ Ampliar os cenários de troubleshooting
+ Introduzir novos componentes de infraestrutura
+📌 Status
+
+🟢 Infraestrutura operacional e fase de Incident Management iniciada
 
 O ambiente possui atualmente:
 
-```text
 2 redes
 1 roteador
 2 switches
 1 servidor DNS
 1 servidor Web
 1 usuário corporativo
-```
+1 central de incidentes no Jira
 
-O serviço `perfumaria.radiante` está disponível e funcionando através da infraestrutura simulada.
+O serviço:
 
-### Próximo marco
+perfumaria.radiante
 
-**Configurar a Central de Operações no Jira e preparar o ambiente para o primeiro incidente controlado.**
+está operacional.
+
+O laboratório possui:
+
+baseline validado;
+central de operações;
+metodologia de troubleshooting;
+fluxo de Incident Management;
+primeiro incidente diagnosticado e resolvido.
+Incidentes
+INC-001 — Portal indisponível
+
+Root Cause:
+HTTP Service Off
+
+Corrective Action:
+HTTP Service On
+
+Status:
+RESOLVED
+🚀 Próximo marco
+
+O próximo cenário planejado será:
+
+INC-002 — Falha relacionada ao DNS
+
+O objetivo será trabalhar um comportamento diferente do primeiro incidente:
+
+Acesso por IP      ✅
+Acesso por nome    ❌
+
+permitindo praticar troubleshooting focado em resolução de nomes e isolamento de falhas na camada DNS.
+
+
+Um ajuste que ficou especialmente melhor nessa versão é que o README agora mostra uma **história completa**: arquitetura → baseline → incidente → investigação → causa → correção → validação → aprendizado. Isso deixa o projeto muito mais forte para alguém que chegar ao seu GitHub e quiser entender não apenas o que você montou, mas **como você pensa diante de uma falha operacional**.
